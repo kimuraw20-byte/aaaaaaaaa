@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>منظّم الدراسة</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7f4ca0">
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="left">
+        <button class="icon-btn" id="backBtn" title="رجوع" aria-label="رجوع">⟵</button>
+        <h1 class="title" id="pageTitle">منظّم الدراسة</h1>
+      </div>
+      <div class="right">
+        <button class="icon-btn" id="themeToggle" title="الوضع الداكن/الفاتح" aria-label="الوضع الداكن">🌓</button>
+      </div>
+    </header>
+
+    <!-- Home view -->
+    <main class="view active" id="homeView">
+      <h2 class="section-title">موادك</h2>
+      <div id="subjectsGrid" class="subjects"></div>
+      <div class="tip">اضغط على أي مادة للدخول. أضف مادة جديدة بزر + في الأسفل.</div>
+    </main>
+
+    <!-- Subject view -->
+    <main class="view" id="subjectView">
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-tab="notes">📄 <span>ملاحظات</span></button>
+        <button class="tab" data-tab="files">📁 <span>ملفات</span></button>
+        <button class="tab" data-tab="images">🖼️ <span>صور</span></button>
+        <button class="tab" data-tab="audio">🎵 <span>صوتيات</span></button>
+      </nav>
+
+      <section id="tab-notes">
+        <div class="empty" id="empty-notes"><span class="big">📄➕</span>لا توجد ملاحظات</div>
+        <div class="notes" id="list-notes"></div>
+      </section>
+
+      <section id="tab-files" class="hide">
+        <div class="empty" id="empty-files"><span class="big">📁</span>لا توجد ملفات</div>
+        <div class="items" id="list-files"></div>
+      </section>
+
+      <section id="tab-images" class="hide">
+        <div class="empty" id="empty-images"><span class="big">🖼️</span>لا توجد صور</div>
+        <div class="gallery" id="list-images"></div>
+      </section>
+
+      <section id="tab-audio" class="hide">
+        <div class="empty" id="empty-audio"><span class="big">🎵</span>لا توجد ملفات صوتية</div>
+        <div class="items" id="list-audio"></div>
+      </section>
+    </main>
+
+    <!-- Add FAB -->
+    <button class="fab" id="fab" title="إضافة">＋</button>
+
+    <!-- Dialog -->
+    <dialog id="dialog">
+      <form method="dialog">
+        <div class="modal-head"><strong id="dlgTitle">إضافة</strong></div>
+        <div class="modal-body" id="dlgBody"></div>
+        <div class="row modal-foot">
+          <button class="btn ghost" value="cancel">إلغاء</button>
+          <button class="btn primary" id="dlgSave" value="default">حفظ</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Image Viewer -->
+    <div id="imgViewer" class="viewer hide">
+      <button id="viewerClose" class="viewer-btn close" aria-label="إغلاق">✕</button>
+      <button id="viewerPrev" class="viewer-btn prev" aria-label="السابق">‹</button>
+      <img id="viewerImg" alt="معاينة">
+      <button id="viewerNext" class="viewer-btn next" aria-label="التالي">›</button>
+    </div>
+
+    <!-- Toasts -->
+    <div id="toasts" class="toasts"></div>
+  </div>
+
+  <script src="app.js"></script>
+
+  <!-- Register Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("Service Worker مسجل ✔️"))
+        .catch(err => console.error("فشل التسجيل:", err));
+    }
+  </script>
+</body>
+</html>
